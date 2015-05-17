@@ -52,6 +52,7 @@ export DIST_DIR    := $(ROOT_DIR)/build/dist
 DIRS = $(DL_DIR) $(TOOLS_DIR) $(BUILD_DIR) $(PACKAGE_DIR) $(DIST_DIR)
 
 # Set up default build configurations (debug | release)
+GCS_NAME                := openpilotgcs
 GCS_BUILD_CONF		:= release
 UAVOGEN_BUILD_CONF	:= release
 ANDROIDGCS_BUILD_CONF	:= debug
@@ -465,7 +466,7 @@ else
     GCS_SILENT := silent
 endif
 
-OPENPILOTGCS_DIR := $(BUILD_DIR)/openpilotgcs_$(GCS_BUILD_CONF)
+OPENPILOTGCS_DIR := $(BUILD_DIR)/$(GCS_NAME)_$(GCS_BUILD_CONF)
 DIRS += $(OPENPILOTGCS_DIR)
 
 OPENPILOTGCS_MAKEFILE := $(OPENPILOTGCS_DIR)/Makefile
@@ -474,7 +475,7 @@ OPENPILOTGCS_MAKEFILE := $(OPENPILOTGCS_DIR)/Makefile
 openpilotgcs_qmake $(OPENPILOTGCS_MAKEFILE): | $(OPENPILOTGCS_DIR)
 	$(V1) cd $(OPENPILOTGCS_DIR) && \
 	    $(QMAKE) $(ROOT_DIR)/ground/openpilotgcs/openpilotgcs.pro \
-	    -spec $(QT_SPEC) -r CONFIG+=$(GCS_BUILD_CONF) CONFIG+=$(GCS_SILENT) $(GCS_QMAKE_OPTS)
+	    -spec $(QT_SPEC) -r CONFIG+=$(GCS_BUILD_CONF) CONFIG+=$(GCS_SILENT) GCS_APP_TARGET=$(GCS_NAME) $(GCS_QMAKE_OPTS)
 
 .PHONY: openpilotgcs
 openpilotgcs: uavobjects_gcs $(OPENPILOTGCS_MAKEFILE)
