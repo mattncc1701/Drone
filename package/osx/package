@@ -4,7 +4,7 @@
 : ${ROOT_DIR?} ${BUILD_DIR?} ${PACKAGE_LBL?} ${PACKAGE_DIR?} ${PACKAGE_NAME?} ${PACKAGE_SEP?}
 
 # more variables
-APP_PATH="${BUILD_DIR}/openpilotgcs_release/openpilotgcs.app"
+APP_PATH="${BUILD_DIR}/${GCS_SMALL_NAME}_release/${GCS_BIG_NAME}.app"
 TEMP_FILE="${PACKAGE_DIR}/OpenPilot-temp.dmg"
 OUT_FILE="${PACKAGE_DIR}/../${PACKAGE_NAME}${PACKAGE_SEP}${PACKAGE_LBL}${PACKAGE_SEP}osx.dmg"
 VOL_NAME="OpenPilot"
@@ -49,7 +49,7 @@ cp "${ROOT_DIR}/LICENSE.txt" "/Volumes/${mountvolume}/Docs"
 cp "${ROOT_DIR}/GPLv3.txt" "/Volumes/${mountvolume}/Docs"
 
 "${ROOT_DIR}/package/osx/libraries" \
-    "/Volumes/${mountvolume}/openpilotgcs.app" || exit 1
+    "/Volumes/${mountvolume}/${GCS_BIG_NAME}.app" || exit 1
 
 hdiutil detach ${device}
 
